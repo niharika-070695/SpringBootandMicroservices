@@ -1,0 +1,455 @@
+			 	                  "Welcome To Ashok IT"				
+			                     "Spring Boot and MicroServices"
+                                              Topic : Dependency Injection Using Objects
+                                              Date  : 24/08/2024
+                                                (Session - 09)                               
+_____________________________________________________________________________________________________________________________
+Last Session
+============
+* We completed the First Spring Application development.
+
+* We have seen how to perform the Dependency Injection using setter Injection and constructor Injection.
+
+* If dependencies of Spring Bean injected by using setter method of a class called "Setter Injection".
+
+* If dependencies of Spring Bean injected by using constructor of a class called "Constructor injection".
+
+* We have seen how to activate the Spring Container and how to request the spring bean from container as well.
+
+Today Session : Simple,Collection Dependency
+============================================
+Student.java
+============
+package com.ashokit.spring.beans;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class Student {
+	
+	private int id;
+	private String name;
+	private String course;
+	private float fee;
+	private String[] emails;
+	private List<String> contactNos;
+	
+	public Student() {
+		System.out.println("Student Class Non-parameterized Constructor....");
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setCourse(String course) {
+		this.course = course;
+	}
+	
+	public void setFee(float fee) {
+		this.fee = fee;
+	}
+	
+	public void setEmails(String[] emails) {
+		this.emails = emails;
+	}
+	
+	public void setContactNos(List<String> contactNos) {
+		this.contactNos = contactNos;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", course=" + course + ", fee=" + fee + ", emails="
+				+ Arrays.toString(emails) + ", contactNos=" + contactNos + "]";
+	}
+}
+
+
+spring.xml
+==========
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+   
+       <!-- configuring the Java Class as spring Bean -->
+   <bean id="wb" class="com.ashokit.spring.beans.Welcome">
+	   <!-- Injecting the value of message property using setter method -->
+	    <property name="message" value="Welcome To AshokIT For Spring Framework"/>
+   </bean>
+   
+      <!-- configuring the Java Class as spring Bean -->
+   <bean id="db" class="com.ashokit.spring.beans.Demo">
+	   <!-- Injecting the value of message property using constructor method -->
+	   <constructor-arg name="topicName" value="Welcome To AshokIT For Spring Framework"/>
+   </bean>  
+   
+     <!--configuring the Java Class as spring Beab -->
+   <bean id="st" class="com.ashokit.spring.beans.Student">
+	   <property name="id" value="123"/>
+	   <property name="name" value="Mahesh"/>
+	   <property name="course" value="SBMS"/>
+	   <property name="fee" value="8000"/>
+	   <property name="emails">
+		   <array>
+			   <value>mahesh.ashokit@gmail.com</value>
+			   <value>ashokit.mahesh@gmail.com</value>
+		   </array>
+	   </property>
+	   <property name="contactNos">
+		   <list>
+			   <value>1121121212121</value>
+			   <value>1232323232323</value>
+		   </list>
+	   </property>
+   </bean>      
+       
+</beans>       
+
+
+App.java
+========
+package com.ashokit;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import com.ashokit.spring.beans.Demo;
+import com.ashokit.spring.beans.Student;
+import com.ashokit.spring.beans.Welcome;
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+        //Finding the location of Spring Configuration file
+    	//Resource(I) and Implementation class(ClassPathResource,FileSystemResource)
+    	//ClassPathResource is used to find the spring configuration file from classpath itself
+    	//FileSystemResource is used to find the spring configuration file from our file system
+    	Resource resource = new ClassPathResource("com/ashokit/spring/config/spring.xml");
+    	
+    	//Activating the BeanFactory Container
+    	BeanFactory factory = new XmlBeanFactory(resource);
+    	
+    	//Request the Spring Bean object from spring container by passing id of spring bean
+    	Welcome welcomeBean = (Welcome) factory.getBean("wb");//Requesting by identity
+    	Welcome welcomeBean1 = (Welcome) factory.getBean("wb");
+    	System.out.println("WelcomeBean:::::::" + welcomeBean.hashCode() + "-----" + welcomeBean1.hashCode());
+    	Demo demoBean = (Demo) factory.getBean("db");//Requesting by identity
+    	Demo demoBean1 = (Demo) factory.getBean("db");
+    	System.out.println("Demo::::" + demoBean.hashCode() +"------"+demoBean1.hashCode());
+    	Student st = factory.getBean(Student.class);//Requesting by Type of Object
+    	System.out.println(st);
+    	Student st1 = factory.getBean(Student.class, "st");//Requesting by Type of object with id 
+    	System.out.println(st1);
+    	//printing the spring beans information
+    	System.out.println(welcomeBean);
+    	System.out.println(demoBean);
+    }
+}
+
+OUTPUT
+======
+Spring Bean Welcome Clas....
+Setter Method called from Welcome Class
+WelcomeBean:::::::1072410641-----1072410641
+Demo Class Constructor
+Demo::::1164107853------1164107853
+Student Class Non-parameterized Constructor....
+Student [id=123, name=Mahesh, course=SBMS, fee=8000.0, emails=[mahesh.ashokit@gmail.com, ashokit.mahesh@gmail.com], contactNos=[1121121212121, 1232323232323]]
+Student [id=123, name=Mahesh, course=SBMS, fee=8000.0, emails=[mahesh.ashokit@gmail.com, ashokit.mahesh@gmail.com], contactNos=[1121121212121, 1232323232323]]
+Welcome [message=Welcome To AshokIT For Spring Framework]
+Demo [topicName=Welcome To AshokIT For Spring Framework]
+
+
+
+SpringClient.java
+=================
+package com.ashokit;
+
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+
+import com.ashokit.spring.beans.Demo;
+import com.ashokit.spring.beans.Student;
+
+public class SpringClient {
+	
+	public static void main(String[] args) {
+		
+		//creating the IOC container 
+		DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
+		
+		//Loading spring configuration file
+		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
+		reader.loadBeanDefinitions("com/ashokit/spring/config/spring.xml");
+		
+		//Getting the Spring Bean Objects
+		Student st = factory.getBean(Student.class);
+		System.out.println(st);
+		Demo db  = (Demo)factory.getBean("db");
+		System.out.println(db);
+	}
+}
+
+OUTPUT
+======
+Student Class Non-parameterized Constructor....
+Student [id=123, name=Mahesh, course=SBMS, fee=8000.0, emails=[mahesh.ashokit@gmail.com, ashokit.mahesh@gmail.com], contactNos=[1121121212121, 1232323232323]]
+Demo Class Constructor
+Demo [topicName=Welcome To AshokIT For Spring Framework]
+
+Different ways for Requesting Spring Bean Object
+================================================
+1) factory.getBean("id")  >>> Object
+
+2) factory.getBean(ClassType) >>>>> class object
+
+3) factory.getBean(classType,"id") >>>> class object
+
+Object Dependency
+=================
+* We will see how to work with Dependency Injection using Objects
+
+* Generally In the Application development we will develop the lot of classes and one class requires the services from another       class  in this case we need to go for "Dependency Injection using Objects".
+
+  Ex: User       <----------------------- Role
+ 
+      Student    <----------------------- Course
+
+      Customer   <----------------------- Address
+
+  
+ CoreJava
+ ========
+       class User{
+
+           //Has-A Relationship
+           Role role = new Role();
+
+           //Business method
+           public void getUserRole(String userId){
+               //calling the Business Method of Role Class...
+              String roleName= role.getRoleByUserId(userId);
+	      System.out.println("Role Checking:::::" + "HRADMIN".equals(roleName));
+           }
+       }
+
+      class Role{
+           
+         //Business method    
+	 public String getRoleByUserId(String userId){
+              //We can write logic to get the Role of its user from DB.
+              return "HRADMIN";
+         }       
+      }
+
+      class MainClient{
+
+           public static void main(String[] args){
+
+                User user = new User();
+
+                user.getUserRole("AIT123");
+
+           }
+      }
+
+OUTPUT
+======
+Role Class Constructor.....
+User Class Constructor......
+Role Checking:::::true
+    
+Observations
+=============
+1) The above two classes objects are created by programmer using new keyword.
+
+2) In our Example the Main class will be "User" and dependent class will be "Role".
+
+3) In our scenario JVM will create the object of dependent class first and then followed by main class object.
+
+
+Spring Framework
+================
+
+User.java
+=========
+package com.ashokit.spring.beans;
+
+public class User {
+	
+	//Dependency in the form of object
+	private Role role;
+	
+	public User() {
+		System.out.println("User Class Constructor....");
+	}
+	
+	//setter injection(Injecting Role Object into user object)
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	
+	public void getUserByRole(String userId) {		
+		
+		String roleName = role.getRoleByUser(userId);		
+		System.out.println("Role Checking::::::" + "HRADMIN".equals(roleName));
+		
+	}
+}
+
+
+Role.java
+=========
+package com.ashokit.spring.beans;
+
+public class Role {
+	
+	public Role() {
+		System.out.println("Role Class Constructor......");
+	}
+	
+	public String getRoleByUser(String userId) {
+		return "HRADMIN";
+	}
+}
+
+spring.xml
+===========
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+   
+     <!-- Configuring the User class as Spring Bean -->
+   <bean id="user" class="com.ashokit.spring.beans.User">
+	   <property name="role" ref="userRole"/>
+   </bean>
+   
+   <!-- Configuring the Role Class as Spring Bean -->
+   <bean id="userRole" class="com.ashokit.spring.beans.Role"/>
+    
+       
+</beans> 
+
+
+ObjectClient.java
+=================
+package com.ashokit;
+
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+
+import com.ashokit.spring.beans.User;
+
+public class ObjectClient {
+	
+	public static void main(String[] args) {
+		
+		//creating the IOC container 
+		DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
+		
+		//Loading spring configuration file
+		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
+		reader.loadBeanDefinitions("com/ashokit/spring/config/spring.xml");
+		
+		System.out.println("Inside the Main method.....");
+	
+	}
+}      
+
+OUTPUT
+======
+Inside the Main method.....
+
+Observation
+===========
+* We are not at all requesting the Spring Bean From IOC Container Hence No Spring Bean object are Created because we are   working with  Beanfactory container its lazy container.
+
+ObjectClient.java
+=================
+package com.ashokit;
+
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+
+import com.ashokit.spring.beans.User;
+
+public class ObjectClient {
+	
+	public static void main(String[] args) {
+		
+		//creating the IOC container 
+		DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
+		
+		//Loading spring configuration file
+		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
+		reader.loadBeanDefinitions("com/ashokit/spring/config/spring.xml");
+		
+		System.out.println("Inside the Main method.....");
+		
+		/*Role roleBean = factory.getBean(Role.class);
+		System.out.println(roleBean.getRoleByUser("AIT123"));*/
+		
+		User userBean = factory.getBean(User.class);
+		//calling business method from User Spring Bean
+		userBean.getUserByRole("AIT123");
+		System.out.println("User Object::::" + userBean);
+	}
+}
+
+OUTPUT
+======
+Inside the Main method.....
+User Class Constructor....
+Role Class Constructor......
+Role Checking::::::true
+User Object::::com.ashokit.spring.beans.User@77fbd92c
+
+Observation
+===========
+1) Here Spring Container only will take care of creating the spring bean objects(User,Role).
+
+2) Here Spring Container will inject the Role object into User Object using setter injection.
+
+3) The Behaviour of Spring IOC container is will create main object first i.e.,User Object and then followed with Dependent      Object i.e.,Role Object.
+
+Use Case Scenario
+=================
+* Assume that we are in project and creating the one class and that class requires the services from other classes(20).
+
+* Programmer need todo the following things
+
+   1) Defining the 20 properties inside the our class i.e.,newly created class.
+
+   2) Programmer need to generate 20 setter methods in newly created class.
+
+   3) Programmer need to confiure newly created class as spring bean and also need to configure dependency object using                   <property> tags.
+
+* In this scenario programmer effort required more and maintainence of application through configuration file its typical  task       because the size of spring configuration file will be more.
+  
+* Inorder to overcome this problem spring cameup with concept as "Autowiring".
+
+Autowiring
+==========
+* Automatically the injecting the one spring bean into another Spring Bean called "Autowiring".
+
+* Autowiring concept is applicable only for "Dependency in the form of objects".
+
+* Inorder to inject the one spring bean into another spring bean through autowiring Spring IOC container will follow some      Strategies 
+   
+     1) No   >>>>>>>>>>>>>>>>> Default Stragegy of Spring IOC Container.
+     2) byName
+     3) byType
+     4) constructor
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++      

@@ -1,0 +1,5 @@
+package com.niharika.service;
+
+public interface CustomerService {
+
+}

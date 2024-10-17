@@ -1,0 +1,12 @@
+package com.niharika.service;
+
+import com.niharika.entity.Customer;
+
+public class CustomerServiceImpl implements CustomerService {
+
+	@Override
+	public Customer createNewBrandCustomer(Customer customer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

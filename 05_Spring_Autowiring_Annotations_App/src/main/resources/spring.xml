@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		https://www.springframework.org/schema/context/spring-context.xsd">
+		
+		<bean id = "stud" class = "com.niharika.spring.beans.Student">
+		     <property name="id" value="NIHA123"/>
+		     <property name="name" value="NIHARIKA"/>
+		</bean>
+		
+		<bean id = "address1" class = "com.niharika.spring.beans.Address" >
+		      <property name="cityName" value="Bangalore"/>
+		      <property name="pinCode" value="520001"/>
+		      
+		</bean>
+		
+		<bean id = "address2" class = "com.niharika.spring.beans.Address" primary="true" >
+		      <property name="cityName" value="Hyderabad"/>
+		      <property name="pinCode" value="526111"/>
+		      
+		</bean>
+		<bean id = "date" class = "java.util.Date"/>
+		
+		<!-- Enabling Auto wiring annotation feature -->
+		<context:annotation-config/>
+</beans>

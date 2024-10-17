@@ -1,0 +1,12 @@
+package com.niharika.service;
+
+import com.niharika.entity.Customer;
+
+public class CustomerServiceImpl implements CustomerService {
+	
+	private Customer createNewBrandCustomer(Customer customer) {
+		Customer c  = new Customer();
+		return c;
+	}
+
+}

@@ -1,0 +1,29 @@
+package com.niharika.controller;
+
+import java.util.Objects;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import com.niharika.entity.Customer;
+import com.niharika.service.CustomerService;
+
+@Controller
+public class CustomerController {
+	
+	@Autowired
+	private CustomerService customerService;
+	
+	public void createNewCustomer(Customer customer) {
+		Customer customerDetails = customerService.createNewBrandCustomer(customer);
+		if(Objects.nonNull(customerDetails)) {
+			System.out.println("Customer created successfully......");
+		    System.out.println(customerDetails);
+		}else {
+			System.out.println("Customer not created...");
+		}
+		
+		
+	}
+
+}

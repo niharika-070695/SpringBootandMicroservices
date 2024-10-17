@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<typeInfoHistroy>
+    <typeInfo handle="=12_SpringDataJpa_App/C:\/Users\/nihar\/.m2\/repository\/org\/springframework\/data\/spring-data-commons\/3.3.4\/spring-data-commons-3.3.4.jar=/maven.pomderived=/true=/=/maven.groupId=/org.springframework.data=/=/maven.artifactId=/spring-data-commons=/=/maven.version=/3.3.4=/=/maven.scope=/compile=/=/maven.pomderived=/true=/&lt;org.springframework.data.repository(CrudRepository.class[CrudRepository" modifiers="1537" timestamp="1728399398029"/>
+    <typeInfo handle="=12_SpringDataJpa_App/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.niharika.service{CustomerService.java[CustomerService" modifiers="513" timestamp="1728660804845"/>
+    <typeInfo handle="=12_SpringDataJpa_App/C:\/Users\/nihar\/.m2\/repository\/org\/hibernate\/orm\/hibernate-core\/6.5.3.Final\/hibernate-core-6.5.3.Final.jar=/maven.pomderived=/true=/=/maven.groupId=/org.hibernate.orm=/=/maven.artifactId=/hibernate-core=/=/maven.version=/6.5.3.Final=/=/maven.scope=/compile=/=/maven.pomderived=/true=/&lt;org.hibernate(CustomEntityDirtinessStrategy.class[CustomEntityDirtinessStrategy" modifiers="1537" timestamp="1728399407170"/>
+</typeInfoHistroy>

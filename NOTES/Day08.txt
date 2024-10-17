@@ -1,0 +1,222 @@
+			 	                  "Welcome To Ashok IT"				
+			                     "Spring Boot and MicroServices"
+                                              Topic : Dependency Injection
+                                              Date  : 23/08/2024
+                                                (Session - 08)                               
+_____________________________________________________________________________________________________________________________
+Yesterday Session
+=================
+* We completed the First Spring Application development.
+
+* We have seen how to perform the Dependency Injection using setter Injection and constructor Injection.
+
+* If dependencies of Spring Bean injected by using setter method of a class called "Setter Injection".
+
+* If dependencies of Spring Bean injected by using constructor of a class called "Constructor injection".
+
+* We have seen how to activate the Spring Container and how to request the spring bean from container as well.
+
+
+Today Session 
+=============
+* Will be deep dive into Dependency Injection Mechanism using various types of properties in Spring Bean class.
+
+* will be covering how to work with DefaultListableBeanFactory class because XmlBeanFactory Class got deprecated.
+
+Student.java
+============
+package com.ashokit.spring.beans;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class Student {
+	
+	private int id;
+	private String name;
+	private String course;
+	private float fee;
+	private String[] emails;
+	private List<String> contactNos;
+	
+	public Student() {
+		System.out.println("Student Class Non-parameterized Constructor....");
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setCourse(String course) {
+		this.course = course;
+	}
+	
+	public void setFee(float fee) {
+		this.fee = fee;
+	}
+	
+	public void setEmails(String[] emails) {
+		this.emails = emails;
+	}
+	
+	public void setContactNos(List<String> contactNos) {
+		this.contactNos = contactNos;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", course=" + course + ", fee=" + fee + ", emails="
+				+ Arrays.toString(emails) + ", contactNos=" + contactNos + "]";
+	}
+}
+
+
+spring.xml
+==========
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+   
+       <!-- configuring the Java Class as spring Bean -->
+   <bean id="wb" class="com.ashokit.spring.beans.Welcome">
+	   <!-- Injecting the value of message property using setter method -->
+	    <property name="message" value="Welcome To AshokIT For Spring Framework"/>
+   </bean>
+   
+      <!-- configuring the Java Class as spring Bean -->
+   <bean id="db" class="com.ashokit.spring.beans.Demo">
+	   <!-- Injecting the value of message property using constructor method -->
+	   <constructor-arg name="topicName" value="Welcome To AshokIT For Spring Framework"/>
+   </bean>  
+   
+     <!--configuring the Java Class as spring Beab -->
+   <bean id="st" class="com.ashokit.spring.beans.Student">
+	   <property name="id" value="123"/>
+	   <property name="name" value="Mahesh"/>
+	   <property name="course" value="SBMS"/>
+	   <property name="fee" value="8000"/>
+	   <property name="emails">
+		   <array>
+			   <value>mahesh.ashokit@gmail.com</value>
+			   <value>ashokit.mahesh@gmail.com</value>
+		   </array>
+	   </property>
+	   <property name="contactNos">
+		   <list>
+			   <value>1121121212121</value>
+			   <value>1232323232323</value>
+		   </list>
+	   </property>
+   </bean>      
+       
+</beans>       
+
+
+App.java
+========
+package com.ashokit;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import com.ashokit.spring.beans.Demo;
+import com.ashokit.spring.beans.Student;
+import com.ashokit.spring.beans.Welcome;
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+        //Finding the location of Spring Configuration file
+    	//Resource(I) and Implementation class(ClassPathResource,FileSystemResource)
+    	//ClassPathResource is used to find the spring configuration file from classpath itself
+    	//FileSystemResource is used to find the spring configuration file from our file system
+    	Resource resource = new ClassPathResource("com/ashokit/spring/config/spring.xml");
+    	
+    	//Activating the BeanFactory Container
+    	BeanFactory factory = new XmlBeanFactory(resource);
+    	
+    	//Request the Spring Bean object from spring container by passing id of spring bean
+    	Welcome welcomeBean = (Welcome) factory.getBean("wb");//Requesting by identity
+    	Welcome welcomeBean1 = (Welcome) factory.getBean("wb");
+    	System.out.println("WelcomeBean:::::::" + welcomeBean.hashCode() + "-----" + welcomeBean1.hashCode());
+    	Demo demoBean = (Demo) factory.getBean("db");//Requesting by identity
+    	Demo demoBean1 = (Demo) factory.getBean("db");
+    	System.out.println("Demo::::" + demoBean.hashCode() +"------"+demoBean1.hashCode());
+    	Student st = factory.getBean(Student.class);//Requesting by Type of Object
+    	System.out.println(st);
+    	Student st1 = factory.getBean(Student.class, "st");//Requesting by Type of object with id 
+    	System.out.println(st1);
+    	//printing the spring beans information
+    	System.out.println(welcomeBean);
+    	System.out.println(demoBean);
+    }
+}
+
+OUTPUT
+======
+Spring Bean Welcome Clas....
+Setter Method called from Welcome Class
+WelcomeBean:::::::1072410641-----1072410641
+Demo Class Constructor
+Demo::::1164107853------1164107853
+Student Class Non-parameterized Constructor....
+Student [id=123, name=Mahesh, course=SBMS, fee=8000.0, emails=[mahesh.ashokit@gmail.com, ashokit.mahesh@gmail.com], contactNos=[1121121212121, 1232323232323]]
+Student [id=123, name=Mahesh, course=SBMS, fee=8000.0, emails=[mahesh.ashokit@gmail.com, ashokit.mahesh@gmail.com], contactNos=[1121121212121, 1232323232323]]
+Welcome [message=Welcome To AshokIT For Spring Framework]
+Demo [topicName=Welcome To AshokIT For Spring Framework]
+
+
+
+SpringClient.java
+=================
+package com.ashokit;
+
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+
+import com.ashokit.spring.beans.Demo;
+import com.ashokit.spring.beans.Student;
+
+public class SpringClient {
+	
+	public static void main(String[] args) {
+		
+		//creating the IOC container 
+		DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
+		
+		//Loading spring configuration file
+		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
+		reader.loadBeanDefinitions("com/ashokit/spring/config/spring.xml");
+		
+		//Getting the Spring Bean Objects
+		Student st = factory.getBean(Student.class);
+		System.out.println(st);
+		Demo db  = (Demo)factory.getBean("db");
+		System.out.println(db);
+	}
+}
+
+OUTPUT
+======
+Student Class Non-parameterized Constructor....
+Student [id=123, name=Mahesh, course=SBMS, fee=8000.0, emails=[mahesh.ashokit@gmail.com, ashokit.mahesh@gmail.com], contactNos=[1121121212121, 1232323232323]]
+Demo Class Constructor
+Demo [topicName=Welcome To AshokIT For Spring Framework]
+
+Different ways for Requesting Spring Bean Object
+================================================
+1) factory.getBean("id")  >>> Object
+
+2) factory.getBean(ClassType) >>>>> class object
+
+3) factory.getBean(classType,"id") >>>> class object
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

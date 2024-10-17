@@ -1,0 +1,265 @@
+			 	                  "Welcome To Ashok IT"				
+			                     "Spring Boot and MicroServices"
+                                              Topic : Steps For Developing First Spring Application
+                                              Date  : 22/08/2024
+                                                (Session - 07)                               
+_____________________________________________________________________________________________________________________________
+Yesterday Session : Developing First Spring Application 
+=======================================================
+* Developing the First Spring Application by using setter Injection with help of STS IDE.
+
+Step-1 : Configure workspace for our application 
+================================================
+   F:\ASHOKIT_WORKSPACE\47_SPRINGBOOT_AND_MICROSERVICES\APPS_WORKSPACE
+
+Step-2: Opening the STS IDE
+===========================
+ * Yesterday we downloaded the STS IDE from web as JAR File.
+
+ * We need to extract that JAR File into normal folder just by double clicking on it JAR File.
+
+ * Onces we got the normal Folder from JAR File >>> Need to find icon sts as "SpringToolSuite4.exe" and double click on it.
+
+ * It prompt you configure the workspace folder(Where we need to save of our all projects) and provide required location
+   in the dialog box i.e.,
+         
+           "F:\ASHOKIT_WORKSPACE\47_SPRINGBOOT_AND_MICROSERVICES\APPS_WORKSPACE"
+
+Step-3: Creating Maven Project
+==============================
+ Maven >>>> It is build tool for Java Projects.
+  
+       >>>> By using build tool we can compile source code,execute test cases,packaging,executing the Application of Java                 Project.
+
+       >>>> By using maven we can download the JAR files/download dependencies required for Project.
+
+       >>>> When we create maven project either from Eclipse IDE/STS IDE/IntelliJ IDE will get one default configuration file
+             i.e.,pom.xml
+
+       >>>> POM Stands Project Object Model can be used to define information about project & Dependencies required for                  project
+
+       >>>> In Maven we have three kinds of repositories that are required for collecting JAR files
+
+            1) Central Repoistory : Every one access the Repo in the following URL(https://mvnrepository.com/)
+ 
+            2) Local Repoistory   : The Repository which resides inside our local machine(.m2 >>> C:/Users/NEW/.m2)
+
+            3) Remote Repoistory  : The Repoistory which can be hosted in artifactories to collect JAR Files(JFrog,Nexus)
+
+       >>>> We no need to download maven software manually because almost all IDE having support with MAVEN.
+
+       >>>> Maven Terminiologies
+
+             groupId ::: company name/ Organization name Ex: org.springframework
+
+             artifactId :::: Project Name/Module-Name  Ex: spring-core
+
+             version :::::: Configure the Required version.
+
+       >>>> Maven provided the predefined Project templates(2000+) i.e.,archetypes
+
+             maven-archetype-quickstart >>>>>>>>>>> This archetype used for developing the standalone APplication in java
+
+             maven-archetype-web >>>>>>>>>>>>>>>>>> This archetype used for developing the webapplication in java.    
+
+  Creating Maven Project 
+  ======================
+  * In the Package Explorer section we have option i.e.,"Create Maven Project" simply click on it.
+
+  * We need to find the quickstart archetype  "maven-archetype-quickstart" (Maven Related Archetypes)
+
+  * Fill the below inputs on Maven Dialog box
+
+      groupId >>>>> ashokit
+ 
+      artifactId >>>>>>> 01_SpringCore_DependencyInjection_App
+
+      Version  >>>>>>>>0.0.1-SNAPSHOT
+
+      package  >>>>>>>> com.ashokit        
+
+  * After the providing the above data we need to click on "Finish" button for creating Maven Project in STS IDE.
+
+Step-4: Exploring the Project Structure
+=======================================
+* After creating the Maven project in STS IDE simple we need expand the Project so that we can find below details
+
+       src/main/java >>>>>>>>>>> We can place our source code
+
+       src/test/java >>>>>>>>>>> We can place our test case related source code.
+
+       JRE_System_Library >>>>>>>> We can have Java related base libraries
+
+       MAVEN Dependencies >>>>>>>> It contains Jars Information through MAVEN Download
+
+       pom.xml  >>>>>>>>>>> Default maven configuration file.
+
+* Configure the Spring Dependencies in pom.xml under <dependencies> section 
+
+	<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+	<dependency>
+    		<groupId>org.springframework</groupId>
+  	        <artifactId>spring-context-support</artifactId>
+	       <version>6.1.12</version>
+        </dependency>
+
+* changing the Java Compiler version from 1.7 to 17 version with below tags in pom.xml
+
+                <maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+
+* Reflect the changes to our maven project we need to perform maven update project
+
+   Right click on project  >>>> Select Maven option >>>> Again select "Update Project" >>> Check the checkbox(force update       snapshots/release) >>>>>  Finally click on "Ok" button.
+
+Step-5: Creating the Spring Bean class
+======================================
+* Before Creating the Spring Bean Class firt we need one package under "src/main/java" for storing spring beans and package    name is "com.ashokit.spring.beans".
+
+* After creating the package we need to add the new Java class by simply right click on package >>>>> New Option >>>>>    Select "Class" option.
+
+Welcome.java
+============
+package com.ashokit.spring.beans;
+
+public class Welcome {
+
+	//Defining the Property
+	private String message;
+	
+	//Defining the setter method used for Setter Injection
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+}
+
+
+Demo.java
+=========
+package com.ashokit.spring.beans;
+
+public class Demo {
+	
+	//Defining the Property
+	private String topicName;
+	
+	//Defining the Constructor
+	public Demo() {
+		System.out.println("Spring Bean Demo Clas....");
+	}
+	
+	//Defining the Constructor to inject the value for topicName
+	public Demo(String topicName) {
+		this.topicName = topicName;
+	}
+
+	@Override
+	public String toString() {
+		return "Demo [topicName=" + topicName + "]";
+	}
+}
+
+
+Step-6: Creating the Spring Configuration File
+==============================================
+* Before creating the spring configuration file we need to create one package to store spring configuration file.
+
+* Right click on "src/main/java" >>>> Select "New" Option >>>> Again select "Package" option >>>> Specify the package name     i.e.,com.ashokit.spring.config.
+
+* Select created package and right click on it  >>>> Select New option >>>> Find "File" option >>> specify the file name 
+  i.e.spring.xml(or) application.xml
+
+spring.xml
+==========
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+   
+   <!-- configuring the Java Class as spring Bean -->
+   <bean id="wb" class="com.ashokit.spring.beans.Welcome">
+	   
+	   <!-- Injecting the value of message property using setter method -->
+	    <property name="message" value="Welcome To AshokIT For Spring Framework"/>
+	    
+   </bean>
+   
+      <!-- configuring the Java Class as spring Bean -->
+   <bean id="db" class="com.ashokit.spring.beans.Demo">
+	   
+	   <!-- Injecting the value of message property using constructor method -->
+        <constructor-arg name="topicName" value="Welcome To AshokIT For Spring Framework"/>
+	    
+   </bean>       
+       
+</beans>       
+
+NOTE
+====
+ * Collect the xmlns from web i.e.,https://docs.spring.io/spring-framework/reference/core/beans/introduction.html
+
+ * Root tag for every spring configuration file will be <beans> tag.
+
+ * <bean> tag is used for representing the Java Class as Spring Bean Class.
+
+ * <property> tag is used to perform setter injection by the IOC Container.
+
+Step-7: Preparing the SpringClient Application
+==============================================
+* SpringClient application is nothing main class of our Spring Application (or) entry point to execute the program.
+
+* We need to follow below points to get Demo class Object (or) Welcome Class Object from IOC Container.
+
+  1) Locate the Spring Configuration file by using Resource Interface and implementation class of "ClassPathResource".
+
+       Spring Configuration file >>>>>>>>>>>>>>>> com/ashokit/spring/config
+
+       Resource resource = new ClassPathResource("com/ashokit/spring/config/spring.xml");
+
+        Resource is an interface froma Spring API and implementation class will be  "ClassPathResource".
+
+        ClassPathResource is used to find the spring configuration file in classpath itself.
+
+        FileSystemResource is used to find the spring configuration file in our FileSystem.
+
+  2) Activate the Spring Container i.e.,BeanFactory in spring application
+
+      BeanFactory (I) and Implementation class (XmlBeanFactory)
+
+      BeanFactory factory = new XmlBeanFactory(resource);
+
+      Programmer is activating the Spring Container so that onces its got Activated It will read the Spring Configuration       file based on Resource object.  
+
+      Spring Container will get to know what are the different spring beans are available in our project.
+
+ 
+  3) Requesting the spring bean object from BeanFactory container
+
+      Demo db = (Demo)factory.getBean("db");  // here db means spring bean id
+
+      Welcome wb = (Welcome)factory.getBean("wb");// here wb means spring bean id
+
+     * getBean() will return the Object of java.lang.Object programmer need to typecast to required spring bean.
+
+  4) Printing the Spring Bean Objects
+
+        System.out.println(wb);
+    	System.out.println(db);
+
+Step-8: Run the Spring Application
+===================================
+ * open App.java and right click on it  and find "Run-As" >>>> Choose "Java Application" option
+
+OUTPUT
+======
+Spring Bean Welcome Clas....
+Setter Method called from Welcome Class
+Demo Class Constructor
+Welcome [message=Welcome To AshokIT For Spring Framework]
+Demo [topicName=Welcome To AshokIT For Spring Framework]
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

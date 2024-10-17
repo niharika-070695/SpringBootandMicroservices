@@ -1,0 +1,24 @@
+package com.niharika.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.niharika.dao.CustomerDao;
+import com.niharika.entity.Customer;
+
+
+@Service
+public class CustomerServiceImpl implements CustomerService {
+	
+	@Autowired
+	private CustomerDao customerDao;   //Here CustomerDao is an interface. Implementation class 
+	                                     //will be injected internally
+
+	@Override
+	public Customer createNewBrandCustomer(Customer customer) {
+		  //Creating record in the database table
+		  Customer customerInfo = customerDao.save(customer);   // save method will return 
+		                                                        //inserted customer information
+		  return customerInfo;
+	}
+}

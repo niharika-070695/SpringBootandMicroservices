@@ -1,0 +1,9 @@
+package com.niharika.service;
+
+import com.niharika.entity.Customer;
+
+public interface CustomerService {
+	
+	public Customer createNewBrandCustomer(Customer customer);
+		
+}

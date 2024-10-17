@@ -1,0 +1,18 @@
+package com.niharika;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+
+@SpringBootApplication
+public class Application {
+
+	public static void main(String[] args) {
+		ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
+		
+		Customer customer = new Customer(101,"Sachin","sachin@infosys.com","9978653245");
+		
+		
+	}
+
+}

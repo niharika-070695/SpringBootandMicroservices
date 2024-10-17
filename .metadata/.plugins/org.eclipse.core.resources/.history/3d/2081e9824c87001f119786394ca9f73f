@@ -1,0 +1,16 @@
+package com.niharika.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.niharika.entity.Customer;
+
+public interface CustomerService {
+
+	public Customer createNewBrandCustomer(Customer customer);
+	
+	public Iterable<Customer> createBulkNewBrandCustomer(List<Customer> customers);
+	
+	public Optional<Customer> getCustomerById(Integer customerId);
+
+}

@@ -1,0 +1,5 @@
+package com.niharika.entity;
+
+public class Customer {
+
+}

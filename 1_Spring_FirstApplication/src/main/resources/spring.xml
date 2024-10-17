@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd">
+		
+    <!-- Configuring Java class as spring Bean -->
+    <bean id ="demo" class="com.niharika.beans.Demo">
+    <!-- Informing to Spring Container about setter method to be used in our Spring bean class -->
+          <property name="topicName" value="Welcome to AshokIT"/>
+    </bean>
+    <bean id = "test" class ="com.niharika.beans.Test"/>
+    <bean id = "welcome" class ="com.niharika.beans.Welcome">
+    <!--  Informing to Spring Container about constructor to be used in our Spring bean class -->
+         <constructor-arg name="wishMessage"  value="Good Morning"/>
+         <constructor-arg name="courseName"  value="SpringBoot"/>
+     </bean>
+    <bean id = "display" class ="com.niharika.beans.Display"/>
+    <bean id = "student" class="com.niharika.beans.Student">
+      <property name="id" value="AIT123"/>
+      <property name="name" value="Mahesh"/>
+      <property name="contactNos">
+         <set>
+            <value>816-796-012</value>
+            <value>563-760-651</value>
+            <value>321-324-889</value>
+         </set>
+      </property>
+      <property name="emailId">
+         <list>
+            <value>mahesh.it@gmail.com</value>
+            <value>naresh.it@gmail.com</value>
+            <value>swathi.it@gmail.com</value>
+         </list>
+      </property>
+      <property name="qualifications">
+         <map>
+            <entry key="primaryschool" value="Navajyotji"/>
+            <entry key="secondaryschool" value="Narayana"/>
+            <entry key="btech" value="St.Martins"/>
+         </map>
+      </property>
+      <property name="courseNames">
+          <array>
+            <value>SpringBoot</value>
+            <value>AWS</value>
+            <value>Kafka</value>
+          </array>
+      </property>
+      <property name="dbProperties">
+          <props>
+             <prop key="driverClassName">oracle.jdbc.driver.OracleDriver</prop>
+             <prop key="driverUrl">jdbc:oracle:thin:@localhost:1521:xe</prop>
+             <prop key="databaseUserName">system</prop>
+             <prop key="databasePassword">password123</prop>
+          </props>
+      </property>
+
+    </bean>
+    
+    <!-- Configuration for object type dependency -->
+    
+    <bean id="user" class="com.niharika.beans.User" >
+       <property name="role" ref="roleObj"/>
+    </bean>
+    <bean id="roleObj" class="com.niharika.beans.Role"/>
+    
+</beans>

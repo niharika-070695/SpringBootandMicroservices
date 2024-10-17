@@ -1,0 +1,20 @@
+package com.niharika;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+
+import com.niharika.controller.CustomerController;
+import com.niharika.entity.Customer;
+
+@SpringBootApplication
+public class Application {
+
+	public static void main(String[] args) {
+		ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
+
+		Customer customer = new Customer(101,"Samantha","Pennsylvania","sachin@infosys.com","9978653245");
+		CustomerController controller = context.getBean(CustomerController.class);
+		controller.createNewCustomer(customer);
+	}
+}

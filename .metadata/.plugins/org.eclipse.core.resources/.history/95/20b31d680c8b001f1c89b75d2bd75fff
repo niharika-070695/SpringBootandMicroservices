@@ -1,0 +1,9 @@
+package com.example.niharika;
+
+public class WelcomeRestController {
+	
+	public String getMessage() {
+		return "Welcome to Mechanicsberg-Pennsylvania";
+	}
+
+}
