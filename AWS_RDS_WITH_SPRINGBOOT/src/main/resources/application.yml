@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: AWS_RDS_WITH_SPRINGBOOT
+  datasource:
+    username: admin
+    password: Chinni1995
+    url: jdbc:mysql://database-1.cr6qem62scb8.us-east-2.rds.amazonaws.com/47_springbootms_db
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update 
+      
+  data:
+    redis:
+      host: localhost      # Redis server host
+      port: 6379           # Redis server port
+#      password: yourpassword  # (Optional) Redis password if authentication is required
+#      timeout: 60000       # Connection timeout in milliseconds
+
+      

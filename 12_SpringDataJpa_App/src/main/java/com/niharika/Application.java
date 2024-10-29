@@ -20,7 +20,7 @@ public class Application {
 //		CustomerController controller = context.getBean(CustomerController.class);
 //		controller.createNewCustomer(customer);
 		
-//		Customer customer = new Customer(102,"Dhoni","Kansas","dhoni@google.com","8878676545");
+		Customer customerA = new Customer(102,"Dhoni","Kansas","dhoni@google.com","8878676545");
 //		CustomerServiceImpl csi = context.getBean(CustomerServiceImpl.class);
 //		csi.createNewBrandCustomer(customer);
 		
@@ -30,7 +30,7 @@ public class Application {
 		Customer customer4 = new Customer(106,"Angela","Omaha","angela@deloitte.com","6754478945");
 		
 		CustomerController controller = context.getBean(CustomerController.class);
-		controller.createNewCustomers(List.of(customer,customer1,customer2,customer3,customer4));
+		controller.createNewCustomers(List.of(customer,customerA,customer1,customer2,customer3,customer4));
 		
 		
 //		controller.fetchCustomerDetailsById(109);

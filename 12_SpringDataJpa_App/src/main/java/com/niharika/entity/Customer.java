@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,7 +15,11 @@ public class Customer {
 	@Id
 	//Database column name(customer_id)
 	@Column(name = "customer_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="customer_seq")
+//	@SequenceGenerator(name="customer_seq",sequenceName="shopping_customers_seq",
+//	                      initialValue=1000,allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Integer customerId;
 
 	//Database column name(name) //matches and @Column annotation is optional

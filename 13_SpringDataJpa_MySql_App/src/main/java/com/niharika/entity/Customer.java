@@ -14,7 +14,9 @@ public class Customer {
 	@Id
 	//Database column name(customer_id)
 	@Column(name = "customer_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	
 	private Integer customerId;
 
 	//Database column name(name) //matches and @Column annotation is optional
