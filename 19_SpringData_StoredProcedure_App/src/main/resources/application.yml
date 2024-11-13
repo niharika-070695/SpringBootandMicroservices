@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: 19_SpringData_StoredProcedure_App
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    password: York@222
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: system
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
