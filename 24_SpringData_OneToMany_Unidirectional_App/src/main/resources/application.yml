@@ -1,0 +1,24 @@
+spring:
+  application:
+    name:  24_SpringData_OneToMany_Unidirectional_App
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: Kansas*123
+    url: jdbc:mysql://localhost:3306/47_springbootms_db
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        enable_lazy_load_no_trans: true
+    
+
+    
+    
+    
+    
+    
+   
